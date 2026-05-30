@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Фанфики | мои истории</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: url('https://i.pinimg.com/736x/9b/b1/84/9bb184ab2754e06182624effa847dad5.jpg') center/cover no-repeat fixed;
+            font-family: 'Inter', sans-serif;
+            padding: 2rem;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glass-paper {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            background: rgba(15, 15, 20, 0.55);
+            backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            border: 1px solid rgba(130, 196, 110, 0.4);
+        }
+        .back-link {
+            color: #82c46e;
+            font-weight: 800;
+            text-decoration: none;
+            border-bottom: 2px solid #82c46e;
+        }
+        h1, h2 {
+            font-family: 'Montserrat', 'Arial Black', sans-serif;
+            font-weight: 800;
+            color: #dff5d4;
+            margin: 1rem 0;
+        }
+        .fanfic-box {
+            background: rgba(0, 0, 0, 0.45);
+            border-left: 5px solid #82c46e;
+            padding: 1.5rem;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            color: #e2f0da;
+        }
+        .saved-item {
+            border-top: 1px solid rgba(130, 196, 110, 0.3);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+        }
+        .date {
+            color: #a8cf94;
+            font-size: 0.75rem;
+            margin: 0.3rem 0;
+        }
+        .green-btn {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid #82c46e;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            color: #eef5e8;
+            text-decoration: none;
+            margin-top: 0.5rem;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            transition: 0.2s;
+        }
+        .green-btn:active {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+<div class="glass-paper">
+    <a href="/" class="back-link">← на главную</a>
+
+    {% if fanfic %}
+        <h1>✨ фанфик: {{ character }}</h1>
+        <div class="fanfic-box">
+            {{ fanfic | replace('\n', '<br>') | safe }}
+        </div>
+    {% endif %}
+
+    {% if saved_fanfics %}
+        <h2>🏷️ сохранённые истории</h2>
+        {% for fic in saved_fanfics %}
+        <div class="saved-item">
+            <strong style="color:#82c46e; font-weight: 800;">{{ fic.character_name }}</strong>
+            <div class="date">{{ fic.created_at }}</div>
+            <div class="fanfic-box" style="max-height: 260px; overflow-y: auto;">
+                {{ fic.fanfic_text[:550] }}{% if fic.fanfic_text|length > 550 %}…{% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html>

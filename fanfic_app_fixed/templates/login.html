@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Фанфики | вход</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            background: url('https://i.pinimg.com/736x/9b/b1/84/9bb184ab2754e06182624effa847dad5.jpg') center/cover no-repeat fixed;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .card {
+            position: relative;
+            z-index: 2;
+            background: rgba(15, 15, 20, 0.62);
+            backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            padding: 2.2rem;
+            border: 1px solid rgba(130, 196, 110, 0.45);
+            max-width: 920px;
+            width: 100%;
+            color: #eef5e8;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #d0f0c4;
+            margin-bottom: 0.4rem;
+        }
+        .sub { color: #b8dbaa; margin-bottom: 1.5rem; }
+        .messages { margin-bottom: 1rem; color: #ffd6d6; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+        .panel {
+            border: 1px solid rgba(130, 196, 110, 0.35);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            background: rgba(0, 0, 0, 0.28);
+        }
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #dff5d4;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        input {
+            width: 100%;
+            background: rgba(255,255,240,0.1);
+            border: 1px solid #82c46e;
+            padding: 0.8rem 1rem;
+            border-radius: 1.5rem;
+            color: #eef5e8;
+            margin-bottom: 0.8rem;
+        }
+        button, .google-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(130, 196, 110, 0.25);
+            border: 2px solid #82c46e;
+            padding: 0.75rem 1.4rem;
+            border-radius: 2rem;
+            color: #eef5e8;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .google-btn { width: 100%; margin-top: 1.2rem; }
+        @media (max-width: 760px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>СОЗДАНИЕ ФАНФИКОВ</h1>
+        <div class="sub">регистрация, авторизация, поиск персонажей и генерация через Mistral</div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="grid">
+            <div class="panel">
+                <h2>Вход</h2>
+                <form method="post" action="/login">
+                    <input type="email" name="email" placeholder="email" required>
+                    <input type="password" name="password" placeholder="пароль" required>
+                    <button type="submit">войти</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>Регистрация</h2>
+                <form method="post" action="/register">
+                    <input type="text" name="name" placeholder="имя" required>
+                    <input type="email" name="email" placeholder="email" required>
+                    <input type="password" name="password" placeholder="пароль от 6 символов" minlength="6" required>
+                    <button type="submit">создать аккаунт</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="/auth/google" class="google-btn">войти через Google</a>
+    </div>
+</body>
+</html>
